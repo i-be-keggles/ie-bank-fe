@@ -25,6 +25,7 @@
               <tr>
                 <th scope="col">Account Name</th>
                 <th scope="col">Account Number</th>
+                <th scope="col">Account Country</th>
                 <th scope="col">Account Balance</th>
                 <th scope="col">Account Currency</th>
                 <th scope="col">Account Status</th>
@@ -35,6 +36,7 @@
               <tr v-for="account in accounts" :key="account.id">
                 <td>{{ account.name }}</td>
                 <td>{{ account.account_number }}</td>
+                <td>{{ account.account_country }}</td>
                 <td>{{ account.balance }}</td>
                 <td>{{ account.currency }}</td>
                 <td>
@@ -97,6 +99,20 @@
             </b-form-input>
           </b-form-group>
           <b-form-group
+              id="form-country-group"
+              label="Account Country:"
+              label-for="form-country-input"
+          >
+            <b-form-input
+                id="form-country-input"
+                type="text"
+                v-model="createAccountForm.country"
+                placeholder="Account Country"
+                required
+            >
+            </b-form-input>
+          </b-form-group>
+          <b-form-group
             id="form-currency-group"
             label="Currency:"
             label-for="form-currency-input"
@@ -155,6 +171,7 @@ export default {
       accounts: [],
       createAccountForm: {
         name: "",
+        country: "",
         currency: "",
       },
       editAccountForm: {
@@ -256,6 +273,7 @@ export default {
     // Initialize forms empty
     initForm() {
       this.createAccountForm.name = "";
+      this.createAccountForm.country = "";
       this.createAccountForm.currency = "";
       this.editAccountForm.id = "";
       this.editAccountForm.name = "";
@@ -267,6 +285,7 @@ export default {
       this.$refs.addAccountModal.hide(); //hide the modal when submitted
       const payload = {
         name: this.createAccountForm.name,
+        country: this.createAccountForm.country,
         currency: this.createAccountForm.currency,
       };
       this.RESTcreateAccount(payload);
