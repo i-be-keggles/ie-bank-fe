@@ -36,7 +36,7 @@
               <tr v-for="account in accounts" :key="account.id">
                 <td>{{ account.name }}</td>
                 <td>{{ account.account_number }}</td>
-                <td>{{ account.account_country }}</td>
+                <td>{{ account.country }}</td>
                 <td>{{ account.balance }}</td>
                 <td>{{ account.currency }}</td>
                 <td>
@@ -154,6 +154,20 @@
             >
             </b-form-input>
           </b-form-group>
+          <b-form-group
+              id="form-edit-country-group"
+              label="Account Country:"
+              label-for="form-edit-country-input"
+          >
+            <b-form-input
+                id="form-edit-country-input"
+                type="text"
+                v-model="editAccountForm.country"
+                placeholder="Account Country"
+                required
+            >
+            </b-form-input>
+          </b-form-group>
           <b-button type="submit" variant="outline-info">Update</b-button>
         </b-form>
       </b-modal>
@@ -177,6 +191,7 @@ export default {
       editAccountForm: {
         id: "",
         name: "",
+        country: "",
       },
       showMessage: false,
       message: "",
@@ -298,6 +313,7 @@ export default {
       this.$refs.editAccountModal.hide(); //hide the modal when submitted
       const payload = {
         name: this.editAccountForm.name,
+        country: this.editAccountForm.country,
       };
       this.RESTupdateAccount(payload, this.editAccountForm.id);
       this.initForm();
